@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "settings": {
+        "heading": "SAY HI - BOOK A MEETING - REQUEST A CLASS",
+        "show_form": false,
+        "email": "hello@example.com"
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,75 @@
+<section class="blog-page page-width" data-section-id="{{ section.id }}">
+  <h1 class="blog-page__title">{{ blog.title }}</h1>
+  <div class="blog-page__grid grid grid--3-col">
+    {% for article in blog.articles %}
+      <a href="{{ article.url }}" class="blog-card">
+        {% if article.image %}
+          <div class="blog-card__image-wrapper">
+            <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | default: article.title }}" loading="lazy">
+          </div>
+        {% endif %}
+        <div class="blog-card__info">
+          <time class="blog-card__date">{{ article.published_at | date: '%B %d, %Y' }}</time>
+          <h2 class="blog-card__title">{{ article.title }}</h2>
+          <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if blog.articles.size == 0 %}
+    <p class="blog-page__empty">No posts yet. Check back soon.</p>
+  {% endif %}
+</section>
+
+<style>
+  .blog-page { padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-2xl); }
+  .blog-page__title {
+    font-size: var(--font-size-2xl);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  .blog-page__grid { gap: var(--spacing-lg); }
+  .blog-card { display: block; }
+  .blog-card__image-wrapper {
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    margin-bottom: var(--spacing-sm);
+  }
+  .blog-card__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .blog-card:hover img { transform: scale(1.03); }
+  .blog-card__date {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-light);
+  }
+  .blog-card__title {
+    font-size: var(--font-size-base);
+    margin: 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .blog-card__excerpt {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  .blog-page__empty {
+    text-align: center;
+    color: var(--color-text-light);
+    padding: var(--spacing-2xl) 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog Page",
+  "settings": []
+}
+{% endschema %}

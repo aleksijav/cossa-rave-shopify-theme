@@ -1,0 +1,61 @@
+<article class="article-page page-width" data-section-id="{{ section.id }}">
+  <header class="article-page__header">
+    <time class="article-page__date">{{ article.published_at | date: '%B %d, %Y' }}</time>
+    <h1 class="article-page__title">{{ article.title }}</h1>
+    {% if article.author %}
+      <p class="article-page__author">By {{ article.author }}</p>
+    {% endif %}
+  </header>
+
+  {% if article.image %}
+    <div class="article-page__image">
+      <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.image.alt | default: article.title }}">
+    </div>
+  {% endif %}
+
+  <div class="article-page__content rte">
+    {{ article.content }}
+  </div>
+
+  <div class="article-page__back">
+    <a href="{{ blog.url }}" class="btn btn--secondary">&larr; Back to {{ blog.title }}</a>
+  </div>
+</article>
+
+<style>
+  .article-page {
+    max-width: 800px;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-2xl);
+  }
+  .article-page__header { text-align: center; margin-bottom: var(--spacing-xl); }
+  .article-page__date {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-light);
+  }
+  .article-page__title {
+    font-size: var(--font-size-2xl);
+    margin: 0.75rem 0 0.5rem;
+  }
+  .article-page__author {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+  }
+  .article-page__image { margin-bottom: var(--spacing-xl); }
+  .article-page__image img { width: 100%; }
+  .article-page__content { font-size: var(--font-size-base); line-height: 1.8; }
+  .article-page__content h2, .article-page__content h3 { margin: 1.5em 0 0.75em; }
+  .article-page__content p { margin-bottom: 1.25em; }
+  .article-page__back {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Article Page",
+  "settings": []
+}
+{% endschema %}

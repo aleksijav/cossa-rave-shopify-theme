@@ -1,0 +1,224 @@
+<section class="product-page" data-section-id="{{ section.id }}">
+  <div class="product-page__inner page-width">
+    <div class="product-page__media">
+      {% for media in product.media %}
+        <div class="product-page__media-item{% if forloop.first %} is-active{% endif %}" data-media-id="{{ media.id }}">
+          {% if media.media_type == 'image' %}
+            <img
+              src="{{ media | image_url: width: 1200 }}"
+              alt="{{ media.alt | default: product.title }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              width="{{ media.width }}"
+              height="{{ media.height }}"
+            >
+          {% elsif media.media_type == 'video' %}
+            {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="product-page__info">
+      <h1 class="product-page__title">{{ product.title }}</h1>
+      <p class="product-page__price" id="product-price">{{ product.selected_or_first_available_variant.price | money }}</p>
+
+      {% if product.metafields.descriptors.subtitle %}
+        <p class="product-page__subtitle">{{ product.metafields.descriptors.subtitle.value }}</p>
+      {% endif %}
+
+      <p class="product-page__tax-note">
+        {%- if cart.taxes_included -%}Taxes included.{%- endif -%}
+        <a href="{{ routes.shipping_url }}">Shipping</a> calculated at checkout.
+      </p>
+
+      {% if product.description != blank %}
+        <div class="product-page__description">{{ product.description }}</div>
+      {% endif %}
+
+      {% form 'product', product, id: 'product-form', data-product-form: '' %}
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            <div class="product-page__option">
+              <label class="product-page__option-label" for="option-{{ option.name | handleize }}">
+                {{ option.name }}
+              </label>
+              <select id="option-{{ option.name | handleize }}" class="product-page__option-select" data-option-index="{{ forloop.index0 }}">
+                {% for value in option.values %}
+                  <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>
+                    {{ value }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+        {% endunless %}
+
+        <div class="product-page__quantity">
+          <label class="product-page__option-label">Quantity</label>
+          <div class="quantity-selector">
+            <button type="button" data-quantity-minus aria-label="Decrease quantity">&minus;</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+            <button type="button" data-quantity-plus aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <select name="id" id="variant-select" class="visually-hidden">
+          {% for variant in product.variants %}
+            <option
+              value="{{ variant.id }}"
+              {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+            >
+              {{ variant.title }} - {{ variant.price | money }}
+            </option>
+          {% endfor %}
+        </select>
+
+        <button
+          type="submit"
+          class="btn btn--primary product-page__add-to-cart"
+          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+        >
+          {% if product.selected_or_first_available_variant.available %}
+            ADD TO CART
+          {% else %}
+            SOLD OUT
+          {% endif %}
+        </button>
+
+        {{ form | payment_button }}
+      {% endform %}
+
+      {% for block in section.blocks %}
+        {% if block.type == 'collapsible_tab' %}
+          <div class="accordion-item" {{ block.shopify_attributes }}>
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>{{ block.settings.heading }}</span>
+              <span class="icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-content__inner">
+                {{ block.settings.content }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-page__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding-top: 0;
+  }
+  .product-page__media {
+    position: sticky;
+    top: var(--header-height);
+    align-self: start;
+  }
+  .product-page__media-item img,
+  .product-page__media-item video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .product-page__info {
+    padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-2xl);
+  }
+  .product-page__title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+  .product-page__price {
+    font-size: var(--font-size-base);
+    margin-bottom: 0.5rem;
+  }
+  .product-page__tax-note {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+    margin-bottom: 1.5rem;
+  }
+  .product-page__tax-note a {
+    text-decoration: underline;
+  }
+  .product-page__description {
+    font-size: var(--font-size-sm);
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin-bottom: 2rem;
+  }
+  .product-page__option {
+    margin-bottom: 1.25rem;
+  }
+  .product-page__option-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .product-page__option-select {
+    padding: 0.625rem 1rem;
+    font-size: var(--font-size-sm);
+  }
+  .product-page__quantity {
+    margin-bottom: 1.5rem;
+  }
+  .product-page__add-to-cart {
+    width: 100%;
+    padding: 1.125rem;
+    margin-bottom: 0.75rem;
+    font-size: var(--font-size-sm);
+  }
+  .product-page__add-to-cart:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .product-page .shopify-payment-button {
+    margin-bottom: 1.5rem;
+  }
+
+  .product-page .accordion-item:first-of-type {
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .product-page__inner { grid-template-columns: 1fr; }
+    .product-page__media { position: static; }
+    .product-page__info { padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-xl); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Page",
+  "blocks": [
+    {
+      "type": "collapsible_tab",
+      "name": "Collapsible tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "PRODUCT INFORMATION"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

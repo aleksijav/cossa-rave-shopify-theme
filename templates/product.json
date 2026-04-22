@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "info": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "PRODUCT INFORMATION"
+          }
+        },
+        "shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "SHIPPING & RETURNS"
+          }
+        }
+      },
+      "block_order": ["info", "shipping"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "RAVE",
+        "subheading": "SOCIAL WELLNESS EXPERIENCES",
+        "button_1_text": "SHOP NOW",
+        "button_2_text": "CLASSES"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter-popup",
+      "settings": {
+        "enable": true,
+        "heading": "NEWSLETTER",
+        "text": "Sign up to receive news, updates and offers and get 10% discount on your first order.",
+        "delay": 3
+      }
+    }
+  },
+  "order": ["hero", "newsletter"]
+}

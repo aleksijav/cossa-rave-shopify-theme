@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-about",
+      "settings": {
+        "heading": "COMMUNITY FOCUSSED WELLNESS EXPERIENCES",
+        "show_trusted_by": true
+      },
+      "blocks": {
+        "concept": {
+          "type": "accordion",
+          "settings": {
+            "heading": "THE CONCEPT"
+          }
+        },
+        "events": {
+          "type": "accordion",
+          "settings": {
+            "heading": "BRAND ACTIVATIONS AND EVENTS"
+          }
+        },
+        "wellness": {
+          "type": "accordion",
+          "settings": {
+            "heading": "CORPORATE WELLNESS"
+          }
+        },
+        "community": {
+          "type": "accordion",
+          "settings": {
+            "heading": "JOIN OUR COMMUNITY"
+          }
+        },
+        "team": {
+          "type": "accordion",
+          "settings": {
+            "heading": "THE TEAM"
+          }
+        }
+      },
+      "block_order": ["concept", "events", "wellness", "community", "team"]
+    }
+  },
+  "order": ["main"]
+}

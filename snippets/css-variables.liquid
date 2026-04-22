@@ -1,0 +1,34 @@
+{% style %}
+  :root {
+    --color-primary: {{ settings.color_primary | default: '#3C2415' }};
+    --color-secondary: {{ settings.color_secondary | default: '#ffffff' }};
+    --color-background: {{ settings.color_background | default: '#ffffff' }};
+    --color-text: {{ settings.color_text | default: '#1a1a1a' }};
+    --color-text-light: {{ settings.color_text_light | default: '#666666' }};
+    --color-border: {{ settings.color_border | default: '#e5e5e5' }};
+    --color-overlay: rgba(0, 0, 0, 0.3);
+
+    --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --font-heading: 'Playfair Display', Georgia, serif;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.8125rem;
+    --font-size-base: 0.9375rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 3rem;
+    --font-size-hero: clamp(3rem, 8vw, 7rem);
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 5rem;
+
+    --header-height: 70px;
+    --max-width: 1400px;
+    --transition: 0.3s ease;
+  }
+{% endstyle %}

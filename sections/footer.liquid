@@ -1,0 +1,114 @@
+<footer class="site-footer" data-section-id="{{ section.id }}">
+  <div class="site-footer__inner">
+    <div class="site-footer__top">
+      <div class="site-footer__links">
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}" class="site-footer__link">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+      <div class="site-footer__right">
+        {% if section.settings.email != blank %}
+          <a href="mailto:{{ section.settings.email }}" class="site-footer__link">{{ section.settings.email }}</a>
+        {% endif %}
+        {% if section.settings.social_url != blank %}
+          <a href="{{ section.settings.social_url }}" target="_blank" rel="noopener" class="site-footer__link">SOCIAL</a>
+        {% endif %}
+        <span class="site-footer__link">&copy;{{ shop.name | upcase }} {{ 'now' | date: '%Y' }}</span>
+      </div>
+    </div>
+
+    {% if section.settings.show_payment_icons %}
+      <div class="site-footer__payment">
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-md) 0;
+  }
+  .site-footer__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+  .site-footer__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  .site-footer__links,
+  .site-footer__right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .site-footer__link {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    transition: opacity var(--transition);
+  }
+  .site-footer__link:hover { opacity: 0.6; }
+
+  .site-footer__payment {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+  }
+  .payment-icon {
+    width: 38px;
+    height: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .site-footer__top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footer menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Contact email",
+      "default": "hello@example.com"
+    },
+    {
+      "type": "url",
+      "id": "social_url",
+      "label": "Social link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
