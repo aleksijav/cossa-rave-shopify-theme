@@ -1,12 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "heading": "RAVE",
-        "subheading": "SOCIAL WELLNESS EXPERIENCES",
+        "heading": "COSSA",
+        "subheading": "WHERE STYLE MEETS PLAY",
         "button_1_text": "SHOP NOW",
-        "button_2_text": "CLASSES"
+        "button_1_url": "",
+        "button_2_text": "COLLECTIONS",
+        "button_2_url": ""
       }
     },
     "newsletter": {
@@ -15,9 +26,15 @@
         "enable": true,
         "heading": "NEWSLETTER",
         "text": "Sign up to receive news, updates and offers and get 10% discount on your first order.",
+        "placeholder": "Email",
+        "button_text": "SUBMIT",
+        "dismiss_text": "No, thanks.",
         "delay": 3
       }
     }
   },
-  "order": ["hero", "newsletter"]
+  "order": [
+    "hero",
+    "newsletter"
+  ]
 }
